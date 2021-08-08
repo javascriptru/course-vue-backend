@@ -104,6 +104,7 @@ export class MeetupsService {
     meetup.description = newMeetup.description;
     meetup.place = newMeetup.place;
     meetup.date = new Date(newMeetup.date);
+    meetup.date.setUTCHours(0, 0, 0, 0);
     if (newMeetup.imageId) {
       meetup.image = await this.imagesRepository.findOne({
         id: newMeetup.imageId,

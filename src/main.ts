@@ -35,7 +35,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .setTitle('Meetups API')
-    .setVersion('1.3.9')
+    .setVersion('1.4.0')
     .addSecurity('cookie-session', {
       type: 'apiKey',
       in: 'cookie',

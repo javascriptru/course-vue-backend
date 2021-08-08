@@ -64,7 +64,9 @@ export class MeetupEntity {
   constructor(meetupDto: Partial<CreateMeetupDto>) {
     this.title = meetupDto.title;
     this.description = meetupDto.description;
-    this.date = new Date(meetupDto.date);
     this.place = meetupDto.place;
+
+    this.date = new Date(meetupDto.date);
+    this.date.setUTCHours(0, 0, 0, 0);
   }
 }

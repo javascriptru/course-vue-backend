@@ -1,6 +1,6 @@
 {
   "name": "course-vue-backend",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "description": "API backend for learn.javascript.ru VueJS Course",
   "author": "Grigorii K. Shartsev <me@shgk.me>",
   "private": true,

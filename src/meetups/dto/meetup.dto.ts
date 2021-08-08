@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { MeetupEntity } from '../entities/meetup.entity';
 
 export class MeetupDto {
@@ -6,7 +7,10 @@ export class MeetupDto {
   readonly description: string;
   readonly imageId: number | null;
   readonly date: number | string;
-  readonly organizer: number | string;
+  @ApiProperty({
+    title: 'Дата митапа в формате UNIX Timestamp в 00:00:00.000 по UTC',
+  })
+  readonly organizer: string;
   readonly place: string;
   readonly organizing?: boolean;
   readonly attending?: boolean;
