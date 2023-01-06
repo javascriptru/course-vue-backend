@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from 'nestjs-mikro-orm';
-import { ImageEntity } from './image.entity';
 import { EntityManager, EntityRepository } from 'mikro-orm';
+import { ImageEntity } from './image.entity';
 import { UserEntity } from '../users/user.entity';
 
 @Injectable()
@@ -26,7 +26,9 @@ export class ImagesService {
     return image;
   }
 
-  async getImage(id: number): Promise<ImageEntity> {
-    return this.imagesRepository.findOne(id);
+  async getImage(id: number | string): Promise<ImageEntity> {
+    return await this.imagesRepository.findOne(
+      typeof id === 'string' ? parseInt(id) : id,
+    );
   }
 }

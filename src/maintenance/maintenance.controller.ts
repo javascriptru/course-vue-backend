@@ -23,6 +23,7 @@ export class MaintenanceController {
   @ApiOkResponse({ description: 'ok' })
   @Get('db-refresh')
   @UseGuards(AdminGuard)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async refreshDatabase(@Query('admin_key') adminKey: string) {
     await this.maintenanceService.dbRefresh();
     return 'ok';

@@ -10,7 +10,6 @@ import { ImagesModule } from './images/images.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import config from './mikro-orm.config';
 import { configuration } from './configuration';
-import { join } from 'path';
 
 @Module({
   imports: [
