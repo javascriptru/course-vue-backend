@@ -3,19 +3,28 @@ import { AgendaItemEntity } from '../entities/agenda-item.entity';
 import { agendaItemsTypes, AgendaItemsTypes } from '../agenda-item-types';
 
 export class MeetupAgendaItemDto {
+  @ApiProperty()
   readonly id: number;
+
+  @ApiProperty()
   readonly startsAt: string;
+
+  @ApiProperty()
   readonly endsAt: string;
-  @ApiProperty({
-    enum: agendaItemsTypes,
-  })
+
+  @ApiProperty({ enum: agendaItemsTypes })
   readonly type: AgendaItemsTypes;
+
+  @ApiProperty()
   readonly title?: string;
+
+  @ApiProperty()
   readonly description?: string;
+
+  @ApiProperty()
   readonly speaker?: string;
-  @ApiProperty({
-    enum: ['RU', 'EN'],
-  })
+
+  @ApiProperty({ enum: ['RU', 'EN'] })
   readonly language?: string;
 
   constructor(item: AgendaItemEntity) {

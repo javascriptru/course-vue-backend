@@ -1,13 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { MeetupWithAgendaDto } from './dto/meetup-with-agenda.dto';
-import { MeetupDto } from './dto/meetup.dto';
 import { InjectRepository } from 'nestjs-mikro-orm';
-import { MeetupEntity } from './entities/meetup.entity';
 import { EntityManager, EntityRepository } from 'mikro-orm';
-import { UserEntity } from '../users/user.entity';
 import { AbstractSqlConnection } from 'mikro-orm/dist/connections/AbstractSqlConnection';
+import { MeetupEntity } from './entities/meetup.entity';
 import { AgendaItemEntity } from './entities/agenda-item.entity';
 import { CreateMeetupDto } from './dto/create-meetup.dto';
+import { UserEntity } from '../users/user.entity';
 import { ImageEntity } from '../images/image.entity';
 
 @Injectable()
@@ -25,13 +23,15 @@ export class MeetupsService {
     private readonly imagesRepository: EntityRepository<ImageEntity>,
   ) {}
 
-  async findAll(user?: UserEntity): Promise<MeetupDto[]> {
+  async findAll(user?: UserEntity): Promise<MeetupEntity[]> {
     const meetups = user
       ? await this.getMeetupsForUser(user)
       : await this.meetupsRepository.findAll();
 
+    await this.em.populate(meetups, 'image');
     await this.em.populate(meetups, 'organizer');
-    return meetups.map((meetup) => new MeetupDto(meetup));
+    await this.em.populate(meetups, 'agenda');
+    return meetups;
   }
 
   private async getMeetupsForUser(user: UserEntity): Promise<MeetupEntity[]> {
@@ -50,10 +50,7 @@ export class MeetupsService {
     return result.map((meetup) => this.meetupsRepository.map(meetup));
   }
 
-  async findById(
-    meetupId: number,
-    user?: UserEntity,
-  ): Promise<MeetupWithAgendaDto> {
+  async findById(meetupId: number, user?: UserEntity): Promise<MeetupEntity> {
     const meetup = await this.meetupsRepository.findOne(meetupId, true);
     if (!meetup) {
       throw new NotFoundException();
@@ -66,13 +63,13 @@ export class MeetupsService {
         meetup.attending = true;
       }
     }
-    return new MeetupWithAgendaDto(meetup);
+    return meetup;
   }
 
   async createMeetup(
     meetupDto: CreateMeetupDto,
     organizer: UserEntity,
-  ): Promise<MeetupWithAgendaDto> {
+  ): Promise<MeetupEntity> {
     this.em.merge(organizer);
     const meetup = new MeetupEntity(meetupDto);
     meetup.agenda.set(
@@ -86,14 +83,14 @@ export class MeetupsService {
       });
     }
     await this.meetupsRepository.persistAndFlush(meetup);
-    return new MeetupWithAgendaDto(meetup);
+    return meetup;
   }
 
   async updateMeetup(
     meetupId: number,
     newMeetup: CreateMeetupDto,
     organizer: UserEntity,
-  ): Promise<MeetupWithAgendaDto> {
+  ): Promise<MeetupEntity> {
     this.em.merge(organizer);
     // TODO: not the best solution and not dry
     const meetup = await this.meetupsRepository.findOne(meetupId, ['agenda']);
@@ -121,7 +118,7 @@ export class MeetupsService {
       newMeetup.agenda.map((agendaDto) => new AgendaItemEntity(agendaDto)),
     );
     await this.em.flush();
-    return new MeetupWithAgendaDto(meetup);
+    return meetup;
   }
 
   async deleteMeetup(meetupId: number) {

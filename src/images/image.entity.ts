@@ -1,31 +1,32 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from 'mikro-orm';
+import { configuration } from '../configuration';
 import { BlobEntityType } from './blob.entity.type';
 import { UserEntity } from '../users/user.entity';
-import { Exclude } from 'class-transformer';
-import { ApiHideProperty } from '@nestjs/swagger';
 
 @Entity({ tableName: 'images' })
 export class ImageEntity {
   @PrimaryKey()
   id!: number;
 
-  @Property({ type: BlobEntityType })
-  @ApiHideProperty()
-  @Exclude()
+  @Property({ persist: false })
+  get image(): string {
+    const publicUrl = configuration().publicUrl;
+    return `${publicUrl}/api/images/${this.id}.${this.mimetype.split('/')[1]}`;
+  }
+
+  @Property({ type: BlobEntityType, hidden: true })
   data: Buffer;
 
-  @Property()
-  @ApiHideProperty()
-  @Exclude()
+  @Property({ hidden: true })
   mimetype: string;
 
-  @Property()
-  @ApiHideProperty()
-  @Exclude()
+  @Property({ hidden: true })
   size: number;
 
-  @ManyToOne()
-  @ApiHideProperty()
-  @Exclude()
+  @ManyToOne({ hidden: true })
   user: UserEntity;
+
+  getPublicImageUrl(publicUrl: string) {
+    return `${publicUrl}/api/images/${this.id}.${this.mimetype.split('/')[1]}`;
+  }
 }

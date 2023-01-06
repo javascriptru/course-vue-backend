@@ -24,6 +24,9 @@ function readImageSync(filename: string): ImageFile {
   return image;
 }
 
+const CURRENT_YEAR = new Date().getUTCFullYear();
+const CURRENT_MONTH = new Date().getUTCMonth();
+
 const IMAGES = {
   // MSK_VUEJS_MEETUP: readImageSync('msk-vuejs-meetup.jpeg'),
   // VUEJS_MOSCOW_MEETUP: readImageSync('vuejs-moscow-meetup.jpeg'),
@@ -89,7 +92,7 @@ export function getDataToSeed(): AnyEntity[] {
       'С каждым днем Vue.js становится популярней, все больше разработчиков и компаний делают ставку на данную технологию — 18 июля при поддержке компании Voximplant пройдет митап сообщества MSK VUE.JS, посвященный фреймворку. Спикеры поделятся опытом разработки, участники сообщества обсудят перспективы развития Vue.js.\n' +
       '\n' +
       'https://voximplant.timepad.ru/event/986750/',
-    date: new Date('2020-05-08').toISOString(),
+    date: Date.UTC(CURRENT_YEAR, CURRENT_MONTH, 8),
     place: 'Москва, офис Voximplant (ул. Мытная 66)',
   });
   mskVueJsMeetup1.organizer = userIgorSh;
@@ -161,7 +164,7 @@ export function getDataToSeed(): AnyEntity[] {
       'Для желающим приехать на собственном транспорте, проблем с парковкой не будет. Для тех кто все же не сможет до нас добраться, будет организована трансляция выступлений.\n' +
       '\n' +
       'https://www.meetup.com/ru-RU/vue-js-moscow/events/248462774/',
-    date: new Date('2020-04-22').toISOString(),
+    date: Date.UTC(CURRENT_YEAR, CURRENT_MONTH - 1, 22),
     place: 'Москва, Физтехпарк, офис Acronis',
   });
   vueMoscowMeetup1.organizer = userEugeneF;
@@ -244,7 +247,7 @@ export function getDataToSeed(): AnyEntity[] {
       'https://www.meetup.com/ru-RU/vue-js-moscow/events/251880636/' +
       '\n' +
       'Ссылка на онлайн трансляцию: https://www.youtube.com/watch?v=SiPKxngecQ0',
-    date: new Date('2020-05-05').toISOString(),
+    date: Date.UTC(CURRENT_YEAR, CURRENT_MONTH, 5),
     place: 'Москва, Офис компании Mail.Ru Group',
   });
   vueMoscowMeetup2.organizer = userEugeneF;
@@ -327,7 +330,7 @@ export function getDataToSeed(): AnyEntity[] {
       'До встречи!\n' +
       '\n' +
       'https://www.meetup.com/ru-RU/vue-js-moscow/events/263421476/',
-    date: new Date('2020-05-12').toISOString(),
+    date: Date.UTC(CURRENT_YEAR, CURRENT_MONTH, 12),
     place: 'Москва, Офис компании Mail.Ru Group',
   });
   vueMoscowMeetup3.organizer = userEugeneF;
@@ -398,7 +401,7 @@ export function getDataToSeed(): AnyEntity[] {
 
   const vueConfUs = new MeetupEntity({
     title: 'VueConf US',
-    date: new Date('2020-05-12').toISOString(),
+    date: Date.UTC(CURRENT_YEAR, CURRENT_MONTH, 12),
     place: 'USA, AUSTIN CONVENTION CENTER',
     description: 'ATX. Code. Vue.\n' + 'https://vueconf.us/',
   });
@@ -546,15 +549,10 @@ export function getDataToSeed(): AnyEntity[] {
   );
 
   const vueJsCourse = new MeetupEntity({
-    title: 'VueJS Course',
-    date: new Date('2020-06-15').toISOString(),
+    title: 'Vue 3 Course',
+    date: Date.UTC(CURRENT_YEAR, CURRENT_MONTH + 1, 15),
     place: 'learn.javascript.ru',
-    description:
-      'Vue.js - прагматичный JavaScript фреймворк, использующийся как для постепенной миграции проектов, так и для разработки современных SPA приложений.\n' +
-      '\n' +
-      'Курс посвящён разработке на Vue.js от использования его как небольшой библиотеки до создания современного SPA приложения.\n' +
-      '\n' +
-      'С первого занятия мы будем разрабатывать проект, на примере которого постепенно изучим возможности Vue, основные библиотеки его экосистемы и их применение для решения практических задач.',
+    description: 'Курс по Vue 3',
   });
   vueJsCourse.organizer = userGrigoriiK;
 

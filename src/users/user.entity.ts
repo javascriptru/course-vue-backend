@@ -25,11 +25,9 @@ export class UserEntity {
   email!: string;
 
   @Property()
-  @ApiHideProperty()
   @Exclude()
   password!: string;
 
-  @ApiHideProperty()
   @Exclude()
   @OneToMany(
     () => MeetupEntity,
@@ -39,7 +37,6 @@ export class UserEntity {
 
   @Property({ persist: false })
   @Expose()
-  @ApiProperty()
   get avatar(): string {
     if (!this.email) {
       return undefined;
@@ -60,7 +57,6 @@ export class UserEntity {
   }
 
   // TODO: Make password store more secure
-  // Bcrypt is better, but is requires gyp to build...
   // Using email as salt is also not secure.
   // Hmac with secret key would be better than hash.
   private passwordHash(password) {

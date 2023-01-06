@@ -1,15 +1,14 @@
-import { CreateAgendaItemDto } from './create-agenda-item.dto';
 import {
   Allow,
   IsNotEmpty,
   Validate,
   ValidateNested,
-  ValidationArguments,
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateAgendaItemDto } from './create-agenda-item.dto';
 
 @ValidatorConstraint()
 class DateAsStringOrNumberValidator implements ValidatorConstraintInterface {
@@ -24,19 +23,26 @@ class DateAsStringOrNumberValidator implements ValidatorConstraintInterface {
 }
 
 export class CreateMeetupDto {
-  @IsNotEmpty({ message: 'Название не может быть пустым' })
+  @ApiProperty({ example: 'Demo Meetup' })
+  @IsNotEmpty({ message: 'Митап должен иметь название' })
   readonly title: string;
 
-  @IsNotEmpty({ message: 'Описание не может быть пустым' })
+  @ApiProperty({ example: 'Lorem ipsum....' })
+  @IsNotEmpty({ message: 'Митап должен иметь описание' })
   readonly description: string;
 
   @IsNotEmpty({ message: 'Митап должен иметь дату' })
   @ApiProperty({
     description: 'Дата митапа в 00:00:00.000 по UTC',
-    example: 1609459200000,
+    example: 1672531200000,
     oneOf: [
-      { type: 'number', description: 'Unix Timestamp', example: 1609459200000 },
-      { type: 'string', description: 'YYYY-MM-DD', example: '2021-01-01' },
+      { type: 'number', description: 'Unix Timestamp', example: 1672531200000 },
+      {
+        type: 'string',
+        description: 'YYYY-MM-DD',
+        example: '2023-01-01',
+        deprecated: true,
+      },
     ],
   })
   @Validate(DateAsStringOrNumberValidator, {
@@ -45,11 +51,16 @@ export class CreateMeetupDto {
   })
   readonly date: string | number;
 
-  @Allow()
-  readonly imageId: number;
-
-  @IsNotEmpty({ message: 'Место не может быть пустым' })
+  @ApiProperty({ example: 'Demo Place' })
+  @IsNotEmpty({ message: 'Митап должен иметь место проведения' })
   readonly place: string;
+
+  @Allow()
+  @ApiProperty({
+    description: 'ID ранее загруженного изображения',
+    example: 1,
+  })
+  readonly imageId: number;
 
   @ValidateNested()
   @Type(() => CreateAgendaItemDto)
