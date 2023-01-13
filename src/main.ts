@@ -14,7 +14,10 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
-  app.enableCors();
+  app.enableCors({
+    origin: configService.get('corsOrigin'),
+    credentials: true,
+  });
 
   app.use(
     session({
