@@ -26,6 +26,9 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       unset: 'destroy',
+      cookie: {
+        sameSite: 'none',
+      },
       store: new (SQLiteStoreFactory(session))({
         db: 'sessions.sqlite3',
         dir: path.join(__dirname, '..'),
