@@ -43,7 +43,6 @@ import { ErrorDto } from '../common/dto/error.dto';
     whitelist: true,
     errorHttpStatusCode: 422,
     exceptionFactory: (errors) => {
-      console.log(errors);
       throw new UnprocessableEntityException(
         Object.values(errors[0].constraints)[0],
       );
