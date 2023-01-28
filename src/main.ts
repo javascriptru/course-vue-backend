@@ -17,7 +17,7 @@ async function bootstrap() {
     origin: configService.get('corsOrigin'),
     credentials: true,
   });
-
+  app.set('trust proxy', 1);
   app.use(
     session({
       secret: configService.get('secret'),
@@ -27,7 +27,7 @@ async function bootstrap() {
       unset: 'destroy',
       cookie: {
         sameSite: 'none',
-        secure: configService.get('publicUrl').startsWith('https'),
+        secure: true,
       },
       store: new (SQLiteStoreFactory(session))({
         db: 'sessions.sqlite3',
