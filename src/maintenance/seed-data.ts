@@ -2,7 +2,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { AnyEntity } from 'mikro-orm';
+import { AnyEntity } from '@mikro-orm/core';
 import { UserEntity } from '../users/user.entity';
 import { ImageEntity } from '../images/image.entity';
 import { MeetupEntity } from '../meetups/entities/meetup.entity';

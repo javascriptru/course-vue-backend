@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { RegisterUserDto } from '../auth/dto/register-user.dto';
-import { EntityManager, EntityRepository } from 'mikro-orm';
-import { InjectRepository } from 'nestjs-mikro-orm';
+import { EntityManager, EntityRepository } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { UserEntity } from './user.entity';
 
 @Injectable()

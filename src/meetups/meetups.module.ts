@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MeetupsController } from './meetups.controller';
 import { MeetupsService } from './meetups.service';
-import { MikroOrmModule } from 'nestjs-mikro-orm';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { MeetupEntity } from './entities/meetup.entity';
 import { ImageEntity } from '../images/image.entity';
 import { AgendaItemEntity } from './entities/agenda-item.entity';

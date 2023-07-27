@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from 'nestjs-mikro-orm';
-import { EntityManager, EntityRepository } from 'mikro-orm';
-import { AbstractSqlConnection } from 'mikro-orm/dist/connections/AbstractSqlConnection';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { EntityManager, EntityRepository } from '@mikro-orm/core';
+import { SqliteConnection } from '@mikro-orm/sqlite/SqliteConnection';
 import { MeetupEntity } from './entities/meetup.entity';
 import { AgendaItemEntity } from './entities/agenda-item.entity';
 import { CreateMeetupDto } from './dto/create-meetup.dto';
@@ -35,7 +35,7 @@ export class MeetupsService {
   }
 
   private async getMeetupsForUser(user: UserEntity): Promise<MeetupEntity[]> {
-    const knex = (this.em.getConnection() as AbstractSqlConnection).getKnex();
+    const knex = (this.em.getConnection() as SqliteConnection).getKnex();
     const result = await knex
       .select(
         '*',

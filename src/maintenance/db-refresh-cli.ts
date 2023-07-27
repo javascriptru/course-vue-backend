@@ -1,4 +1,4 @@
-import { MikroORM } from 'mikro-orm';
+import { MikroORM } from '@mikro-orm/core';
 import config from '../mikro-orm.config';
 import { DatabaseManager } from './database-manager';
 

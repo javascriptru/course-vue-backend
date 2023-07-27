@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from 'mikro-orm';
+import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { configuration } from '../configuration';
 import { BlobEntityType } from './blob.entity.type';
 import { UserEntity } from '../users/user.entity';
@@ -23,7 +23,7 @@ export class ImageEntity {
   @Property({ hidden: true })
   size: number;
 
-  @ManyToOne({ hidden: true })
+  @ManyToOne(() => UserEntity, { hidden: true })
   user: UserEntity;
 
   getPublicImageUrl(publicUrl: string) {

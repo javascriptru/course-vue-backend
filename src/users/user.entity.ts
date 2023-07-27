@@ -5,7 +5,7 @@ import {
   PrimaryKey,
   Property,
   Unique,
-} from 'mikro-orm';
+} from '@mikro-orm/core';
 import { MeetupEntity } from '../meetups/entities/meetup.entity';
 import { RegisterUserDto } from '../auth/dto/register-user.dto';
 import { createHash } from 'crypto';

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from 'nestjs-mikro-orm';
-import { EntityManager, EntityRepository } from 'mikro-orm';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { ImageEntity } from './image.entity';
 import { UserEntity } from '../users/user.entity';
 

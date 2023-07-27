@@ -1,4 +1,4 @@
-import { Type } from 'mikro-orm';
+import { Type } from '@mikro-orm/core';
 
 export class BlobEntityType extends Type {
   convertToDatabaseValue(value: any): any {

@@ -8,7 +8,7 @@ import {
   OneToOne,
   PrimaryKey,
   Property,
-} from 'mikro-orm';
+} from '@mikro-orm/core';
 import { UserEntity } from '../../users/user.entity';
 import { AgendaItemEntity } from './agenda-item.entity';
 import { CreateMeetupDto } from '../dto/create-meetup.dto';
@@ -36,7 +36,7 @@ export class MeetupEntity {
   })
   image?: ImageEntity;
 
-  @ManyToOne()
+  @ManyToOne(() => UserEntity)
   organizer!: UserEntity;
 
   @OneToMany({

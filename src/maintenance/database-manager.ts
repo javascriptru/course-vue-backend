@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import path from 'path';
-import { EntityManager, Transaction } from 'mikro-orm';
+import { EntityManager, Transaction } from '@mikro-orm/core';
 import { getDataToSeed } from './seed-data';
 import { InternalServerErrorException } from '@nestjs/common';
 
