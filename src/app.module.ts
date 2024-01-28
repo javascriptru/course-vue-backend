@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -10,6 +10,7 @@ import { ImagesModule } from './images/images.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import config from './mikro-orm.config';
 import { configuration } from './configuration';
+import { CorsMiddleware } from './common/middleware/cors.middleware';
 
 @Module({
   imports: [
@@ -40,4 +41,8 @@ import { configuration } from './configuration';
     MaintenanceModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CorsMiddleware).forRoutes('*');
+  }
+}

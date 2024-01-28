@@ -7,16 +7,13 @@ import passport from 'passport';
 import session from 'express-session';
 import SQLiteStoreFactory from 'connect-sqlite3';
 import { AppModule } from './app.module';
+import * as process from 'process';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
 
   app.setGlobalPrefix('api');
-  app.enableCors({
-    origin: configService.get('corsOrigin'),
-    credentials: true,
-  });
   app.set('trust proxy', 1);
   app.use(
     session({
