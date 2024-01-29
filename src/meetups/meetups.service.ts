@@ -51,13 +51,13 @@ export class MeetupsService {
   }
 
   async findById(meetupId: number, user?: UserEntity): Promise<MeetupEntity> {
-    this.em.merge(user);
     const meetup = await this.meetupsRepository.findOne(meetupId, true);
     if (!meetup) {
       throw new NotFoundException();
     }
     await meetup.participants.init();
     if (user) {
+      this.em.merge(user);
       meetup.organizing = meetup.organizer.id === user.id;
       meetup.attending = meetup.participants.contains(user);
     }
